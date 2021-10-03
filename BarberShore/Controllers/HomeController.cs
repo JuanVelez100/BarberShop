@@ -1,4 +1,5 @@
-﻿using BarberShore.Models;
+﻿using BarberEntity.Entity;
+using BarberShore.Models;
 using BarberShoreLogic.Logic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,21 +14,44 @@ namespace BarberShore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private PersonaLogic personaLogic = new PersonaLogic();
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string nombre="")
         {
-            PersonaLogic personaLogic = new PersonaLogic();
+            List<PersonaEntity> listPersonaEntities = new List<PersonaEntity>();
 
-            return View(personaLogic.GetAllPerson());
+            if (string.IsNullOrEmpty(nombre))
+            {
+                listPersonaEntities = personaLogic.GetAllPerson();
+            }
+            else
+            {
+                listPersonaEntities = personaLogic.GetAllPerson().Where(x => x.Nombre.ToUpper().Contains(nombre.ToUpper())).ToList();
+            }
+
+            return View(listPersonaEntities);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult Create(PersonaEntity personaEntity)
+        {
+            var person = personaLogic.AddPerson(personaEntity);
 
+            ViewBag.Message = person.Message;
+            ViewBag.Type = person.Type;
+
+            return View(personaEntity);
+        }
 
 
     }

@@ -6,34 +6,32 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 
+<div class="row">
 
-<style>
-    .button {
-        background-color: #4CAF50; /* Green */
-        border-radius: 5px;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-    }
-</style>
+    <div class="col-sm-8">
+        <a asp-action="Create" class="btn btn-primary" type="button">Crear nueva</a>
+    </div>
 
+    <div class="col-sm-4">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <div class="form-inline">
+                @Html.TextBox("nombre", "", new { @class = "form-control" })
+                <input type="submit" value="Buscar" class="btn btn-primary">
+            </div>
+        }
+    </div>
 
-<button type="button" class="button">Boton Css</button>
-<button type="button" class="btn btn-primary">Boton Bootstrap</button>
+</div>
 
+<br />
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayName("Indentificación")
+                @Html.DisplayNameFor(model => model.Cedula)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
