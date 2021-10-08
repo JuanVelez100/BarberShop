@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+@{
+    if (!string.IsNullOrEmpty(ViewBag.LoginError))
+    {
+
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-md-4"> </div>
+
+            <div class="col-md-4" align="center">
+                <div class="alert alert-danger">
+                    <strong>@ViewBag.LoginError</strong>
+                </div>
+                <form asp-action="Login">
+                    <input align="center" type="submit" value="Volver" class="btn btn-success" />
+                </form>
+            </div>
+
+            <div class="col-md-4"> </div>
+        </div>
+
+
+    }
+    else
+    {
+
+        <div class="row">
+            <div class="col-md-3"> </div>
+            <div class="col-md-6">
+                <img src="/image/Barber.png" class="BarberLogo">
+            </div>
+            <div class="col-md-3" align="center">
+                <a asp-action="Login" class="Salir">
+                    <img src="/image/salir.png" class="ImageSalir" />
+                </a>
+                <p class="text-secondary">Cerrar Sessión</p>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row">
+
+            <div class="col-md-2 Menu" align="center">
+                <p class="h5 TextIcon">Agenda tu cita</p>
+                <img src="/image/Crear.png" class="ImageIcon" />
+                <button class="btn btn-primary BotonIncon">Agendar</button>
+            </div>
+
+            <div class="col-md-2 Menu" align="center">
+                <p class="h5 TextIcon">Cancela tu cita</p>
+                <img src="/image/Cancelar.png" class="ImageIcon" />
+                <button class="btn btn-primary BotonIncon">Cancelar</button>
+            </div>
+
+            <div class="col-md-2 Menu" align="center">
+                <p class="h5 TextIcon">Edita tu cita</p>
+                <img src="/image/Editar.png" class="ImageIcon" />
+                <button class="btn btn-primary BotonIncon">Editar</button>
+            </div>
+
+            <div class="col-md-2 Menu" align="center">
+                <p class="h5 TextIcon">Historial</p>
+                <img src="/image/Historial.png" class="ImageIcon" />
+                <button class="btn btn-primary BotonIncon">Ver</button>
+            </div>
+
+            <div class="col-md-2 Menu" align="center">
+                <p class="h5 TextIcon">Afiliación</p>
+                <img src="/image/Afiliar.png" class="ImageIcon" />
+                <button class="btn btn-primary BotonIncon">Ver</button>
+            </div>
+
+        </div>
+
+    }
+
+}
+

@@ -1,0 +1,126 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    height: 50%;
+    width: 100%;
+    margin-bottom: 60px;
+    background-image: url(/image/BarberFondo.jpg);
+    background-position: center;
+    background-repeat: space;
+    background-size: cover;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+.control-label {
+    color: snow;
+    text-shadow: 1px 1px 2px snow;
+}
+.BarberLogo {
+    position: center;
+    width: 100%;
+    height: 200px;
+}
+.text-danger2 {
+    color: #C80064;
+    text-shadow: 1px 1px 2px #C80064;
+}
+.textData {
+    opacity: 0.6;
+}
+.ImageIcon {
+    width: 100%;
+    height: 200px;
+}
+.BotonIncon {
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+.TextIcon {
+    width: 100%;
+    margin: 20px 0px -20px 0px;
+    opacity: 0.8;
+    color: rgba(255,255, 255, 0.5);
+    text-shadow: 1px 1px 2px white;
+}
+.Menu {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 5px solid rgba(200, 0, 100, 0.5);
+    border-radius: 5px;
+    margin: 10px 10px 10px 10px;
+}
+.ImageSalir {
+    width: 80px;
+    height: 80px;
+    margin: 10px 0px -10px 0px;
+}
+.Salir {
+    background-color: Transparent;
+    border: none;
+}
+.alert {
+    opacity: 0.5;
+}

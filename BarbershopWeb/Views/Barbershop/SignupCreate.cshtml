@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "SignupCreate";
+}
+
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-4"> </div>
+
+    <div class="col-md-4" align="center">
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="alert alert-@ViewBag.Type" align="center">
+                <strong>@ViewBag.Message</strong>
+            </div>
+        }
+
+        <form asp-action="Login">
+            <input align="center" type="submit" value="Volver" class="btn btn-success" />
+        </form>
+    </div>
+
+    <div class="col-md-4"> </div>
+</div>
