@@ -14,6 +14,7 @@ using BarbershopLogic.Logic;
 
 namespace BarbershopWeb.Controllers
 {
+    //Prueba
     public class BarbershopController : Controller
     {
         private readonly ILogger<BarbershopController> logger;
