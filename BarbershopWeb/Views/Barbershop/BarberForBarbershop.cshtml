@@ -1,0 +1,95 @@
+﻿@model IEnumerable<BarbershopEntity.Entity.BarberEntity>
+
+@{
+    ViewData["Title"] = "BarberForBarbershop";
+}
+
+<h1>BarberForBarbershop</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdServicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartAttentionTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndAttentionTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBarberShop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameBarberShop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Passwork)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mail)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdServicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartAttentionTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndAttentionTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBarberShop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameBarberShop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Passwork)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

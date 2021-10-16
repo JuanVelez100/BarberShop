@@ -7,7 +7,7 @@ using static BarbershopEntity.Helper.Emun;
 
 namespace BarbershopEntity.Entity
 {
-    public class ClientEntity : PersonEntity
+    public class ClientEntity : PersonEntity 
     {
         public TypeAffiliation TypeAffiliation { get; set; }
     }

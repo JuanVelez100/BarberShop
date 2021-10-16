@@ -39,17 +39,21 @@ namespace BarbershopWeb.Controllers
         [HttpPost]
         public IActionResult Home(LoginEntity loginEntity)
         {
+            var session = HttpContext.Session.GetString("token");
 
-            if (barberShopLogic.VefirySession(loginEntity))
+            if (session == null)
             {
-                HttpContext.Session.SetString("token", loginEntity.Id);
-                VerifySession();
+                if (barberShopLogic.VefirySession(loginEntity))
+                {
+                    HttpContext.Session.SetString("token", loginEntity.Id);
+                    VerifySession();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Barbershop", routeValues: new { loginError = "El usuario no existe" });
+                }
             }
-            else
-            {
-                return RedirectToAction("Login", "Barbershop", routeValues: new { loginError = "El usuario no existe" });
-            }
-
+            
             return View();
         }
 
@@ -78,10 +82,51 @@ namespace BarbershopWeb.Controllers
             return View();
         }
 
-        public IActionResult CreateAppointment()
+        public IActionResult Reservation()
         {
             VerifySession();
+
+            //Obtener valores del cliente logeeado con la session
+            var idClient = HttpContext.Session.GetString("token");
+            ViewBag.Id = idClient;
+            var client = barberShopLogic.GetClientEntityForId(idClient);
+            ViewBag.Name = client.Name + " "+ client.Lastname;
+
+            //Lista de ciudades
+            List<SelectListItem> listCities = new List<SelectListItem>();
+            listCities.Add(new SelectListItem { Value = "0", Text = "Seleccione Ciudad" });
+
+            var cities = barberShopLogic.GetAllCities();
+
+            foreach (var city in cities)
+            {
+                listCities.Add(new SelectListItem { Value = city.Id.ToString() , Text = city.Name });
+            }
+
+            ViewBag.ListCities = listCities;
+
+            //Lista de Barberias
+            List<SelectListItem> listBarbershop = new List<SelectListItem>();
+            ViewBag.ListBarbershop = listBarbershop;
+
+            //Lista de Barberos
+            List<SelectListItem> listBarbers = new List<SelectListItem>();
+            ViewBag.ListBarbers = listBarbers;
+
+
+            //Lista de Horas disponibles por Dia de un Barbero
+            List<SelectListItem> listHour = new List<SelectListItem>();
+            ViewBag.ListHour = listHour;
+
+
             return View();
+        }
+
+        public IActionResult BarberForBarbershop()
+        {
+            var listBarber = barberShopLogic.GetAllBarbers(1);
+
+            return View(listBarber);
         }
 
         private void VerifySession()
@@ -93,6 +138,39 @@ namespace BarbershopWeb.Controllers
                 HttpContext.Session.Clear();
                 ViewBag.LoginError = "El usuario no esta logeado";
             }
+        }
+
+
+        public JsonResult GetAllBarbershopForCity(int city)
+        {
+            var resultado = barberShopLogic.GetAllBarbershop(city);
+            return Json(resultado.ToList());
+        }
+
+        public JsonResult GetAllBarbersForBarbershop(int barbershop)
+        {
+            var resultado = barberShopLogic.GetAllBarbers(barbershop);
+            return Json(resultado.ToList());
+        }
+
+        public JsonResult GetAllHoursAvailableForDate(DateTime date, string idBarber)
+        {
+            var resultado = barberShopLogic.GetAllHoursAvailableForDate(date, idBarber);
+            return Json(resultado.ToList());
+        }
+
+        [HttpGet]
+        public string Prueba(string prueba)
+        {
+            return prueba + " Todo anda muy bien";
+        }
+
+        [HttpPost]
+        public LoginEntity Prueba2(LoginEntity loginEntity)
+        {
+            loginEntity.Id = loginEntity.Id + " :Id ";
+            loginEntity.Passwork = loginEntity.Passwork + " :Contraseña "; ;
+            return  loginEntity;
         }
 
 

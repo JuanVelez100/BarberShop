@@ -101,16 +101,14 @@ body {
 }
 .TextIcon {
     width: 100%;
-    margin: 20px 0px -20px 0px;
     opacity: 0.8;
-    color: rgba(255,255, 255, 0.5);
-    text-shadow: 1px 1px 2px white;
+    color: white;
+    font-family: "Times New Roman", Georgia, Serif;
 }
 .Menu {
     background-color: rgba(0, 0, 0, 0.5);
-    border: 5px solid rgba(200, 0, 100, 0.5);
-    border-radius: 5px;
-    margin: 10px 10px 10px 10px;
+    border: 2px solid rgba(200, 0, 100, 0.5);
+    border-radius: 2px;
 }
 .ImageSalir {
     width: 80px;
@@ -123,4 +121,7 @@ body {
 }
 .alert {
     opacity: 0.5;
+}
+.Hide{
+    display:none;
 }

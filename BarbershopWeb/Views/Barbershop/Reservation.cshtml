@@ -1,0 +1,266 @@
+﻿@model BarbershopEntity.Entity.ReservationEntity
+
+@{
+    ViewData["Title"] = "Agendar";
+}
+
+@{
+    if (!string.IsNullOrEmpty(ViewBag.LoginError))
+    {
+
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-md-4"> </div>
+
+            <div class="col-md-4" align="center">
+                <div class="alert alert-danger">
+                    <strong>@ViewBag.LoginError</strong>
+                </div>
+                <form asp-action="Login">
+                    <input align="center" type="submit" value="Volver" class="btn btn-success" />
+                </form>
+            </div>
+
+            <div class="col-md-4"> </div>
+        </div>
+
+
+    }
+    else
+    {
+
+        <div class="row">
+
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4">
+                <br />
+                <br />
+                <br />
+
+                <img src="/image/Barber.png" class="BarberLogo">
+
+                <form asp-action="Reservation">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group" align="center">
+                        <label class="control-label">@ViewBag.Name - @ViewBag.Id</label>
+                        <input asp-for="IdClient" class="form-control textData Hide" value="@ViewBag.Id" disabled />
+                        <span asp-validation-for="IdClient" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Ciudad</label>
+                        @Html.DropDownList("IdCity", (IEnumerable<SelectListItem>)ViewBag.ListCities, htmlAttributes: new { @class = "form-control textData" })
+                    </div>
+
+                    <div class="form-group Hide" id="divBarberShop">
+                        <label class="control-label">Barberia</label>
+                        @Html.DropDownList("IdBarberShop", (IEnumerable<SelectListItem>)ViewBag.ListBarbershop, htmlAttributes: new { @class = "form-control textData" })
+                    </div>
+
+                    <div class="alert alert-info Hide" id="divNotBarbershop">
+                        <strong>No hay Barberias para esta ciudad</strong>
+                    </div>
+
+                    <div class="form-group Hide" id="divBarber">
+                        <label class="control-label">Barbero</label>
+                        @Html.DropDownList("IdBarber", (IEnumerable<SelectListItem>)ViewBag.ListBarbers, htmlAttributes: new { @class = "form-control textData" })
+                    </div>
+
+                    <div class="alert alert-info Hide" id="divNotBarber">
+                        <strong>No hay Barberos para esta Barberia</strong>
+                    </div>
+
+                    <div class="form-group Hide" id="divDate">
+                        <label class="control-label">Fecha</label>
+                        <input asp-for="Date" type="date" class="form-control textData" min="@DateTime.Now.ToString("yyyyy-MM-dd")" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group Hide" id="divHour">
+                        <label class="control-label">Hora</label>
+                        @Html.DropDownList("Hour", (IEnumerable<SelectListItem>)ViewBag.ListHour, htmlAttributes: new { @class = "form-control textData" })
+                    </div>
+
+                    <div class="alert alert-info Hide" id="divNotHour">
+                        <strong>El barbero no tiene horarios disponible en esa fecha</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Observación</label>
+                        <input asp-for="Observation" class="form-control textData" />
+                        <span asp-validation-for="Observation" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" align="center">
+                        <input type="submit" value="Agendar" class="btn btn-primary" />
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="col-md-12" align="center">
+            <form asp-action="Home">
+                <button class="btn btn-success">Volver</button>
+            </form>
+        </div>
+
+    }
+
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        //Selecion una ciudad
+        $('#IdCity').change(function () {
+
+            $.ajax({
+                url: '/Barbershop/GetAllBarbershopForCity',
+                type: "POST",
+                data: { city: $('#IdCity').val() },
+                dataType: "json",
+                success: function (data) {
+
+                    $('#IdBarberShop option').remove();
+
+                    $('#divNotBarbershop').hide();
+                    $('#divNotBarber').hide();
+                    $('#divNotHour').hide();
+                    $('#divBarberShop').hide();
+                    $('#divBarber').hide();
+                    $('#divDate').hide();
+                    $('#divHour').hide();
+
+                    if (data != null && data.length > 0) {
+
+                        $('#IdBarberShop').append('<option value="0" selected="selected">Seleccione Barberia</option>');
+
+                        for (var i = 0; i < data.length; i++) {
+                            $('#IdBarberShop').append('<option value="' + data[i].id + '" selected="selected">' + data[i].name + '</option>');
+                        }
+
+                        $('#IdBarberShop').prop('selectedIndex', 0);
+                        $('#divBarberShop').show();
+                    }
+                    else
+                    {
+                        $('#divNotBarbershop').show();
+                    }
+
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+
+
+        });
+
+       //Selecion una barberia
+        $('#IdBarberShop').change(function () {
+
+            $.ajax({
+                url: '/Barbershop/GetAllBarbersForBarbershop',
+                type: "POST",
+                data: { barbershop: $('#IdBarberShop').val() },
+                dataType: "json",
+                success: function (data) {
+
+                    $('#IdBarber option').remove();
+
+                    $('#divNotBarber').hide();
+                    $('#divNotHour').hide();
+                    $('#divBarber').hide();
+                    $('#divDate').hide();
+                    $('#divHour').hide();
+
+                    if (data != null && data.length > 0) {
+
+                        $('#IdBarber').append('<option value="0" selected="selected">Seleccione Barbero</option>');
+
+                        for (var i = 0; i < data.length; i++) {
+                            $('#IdBarber').append('<option value="' + data[i].id + '" selected="selected">' + data[i].name + ' ' + data[i].lastname  + '</option>');
+                        }
+
+                        $('#IdBarber').prop('selectedIndex', 0);
+                        $('#divBarber').show();
+                    }
+                    else {
+                        $('#divNotBarber').show();
+                    }
+
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+
+        });
+
+       //Selecion barbero
+        $('#IdBarber').change(function () {
+
+            if ($('#IdBarberShop').val() == 0) {
+                $('#divDate').hide();
+                $('#divHour').hide();
+                $('#divNotHour').hide();
+            } else {
+                $('#divDate').show();
+                $('#divHour').hide();
+                $('#divNotHour').hide();
+            }
+           
+        });
+
+       //Selecion una fecha
+        $('#Date').change(function () {
+
+            $.ajax({
+                url: '/Barbershop/GetAllHoursAvailableForDate',
+                type: "POST",
+                data: { date: $('#Date').val(), idBarber: $('#IdBarber').val() },
+                dataType: "json",
+                success: function (data) {
+
+                    $('#Hour option').remove();
+                    $('#divNotHour').hide();
+
+                    if (data != null && data.length > 0) {
+
+                        $('#Hour').append('<option value="0" selected="selected">Seleccione un Horario</option>');
+
+                        for (var i = 0; i < data.length; i++) {
+                            $('#Hour').append('<option value="' + data[i] + '" selected="selected">' + data[i] + '</option>');
+                        }
+
+                        $('#Hour').prop('selectedIndex', 0);
+                        $('#divHour').show();
+                    }
+                    else {
+                        $('#divNotHour').show();
+                        $('#divHour').hide();
+                    }
+
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+
+        });
+
+
+    });
+
+</script>

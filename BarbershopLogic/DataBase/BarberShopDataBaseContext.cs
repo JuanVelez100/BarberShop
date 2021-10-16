@@ -17,9 +17,14 @@ namespace BarbershopLogic.DataBase
         {
         }
 
+        public virtual DbSet<Barber> Barbers { get; set; }
+        public virtual DbSet<Barbershop> Barbershops { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Contract> Contracts { get; set; }
         public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,6 +38,52 @@ namespace BarbershopLogic.DataBase
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+
+            modelBuilder.Entity<Barber>(entity =>
+            {
+                entity.ToTable("Barber");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.Barber)
+                    .HasForeignKey<Barber>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Barber_Person");
+
+                entity.HasOne(d => d.IdBarberShopNavigation)
+                    .WithMany(p => p.Barbers)
+                    .HasForeignKey(d => d.IdBarberShop)
+                    .HasConstraintName("FK_Barber_Barbershop");
+
+                entity.HasOne(d => d.IdServicioNavigation)
+                    .WithMany(p => p.Barbers)
+                    .HasForeignKey(d => d.IdServicio)
+                    .HasConstraintName("FK_Barber_Service");
+            });
+
+            modelBuilder.Entity<Barbershop>(entity =>
+            {
+                entity.ToTable("Barbershop");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.IdCityNavigation)
+                    .WithMany(p => p.Barbershops)
+                    .HasForeignKey(d => d.IdCity)
+                    .HasConstraintName("FK_Barbershop_Cities");
+            });
+
+            modelBuilder.Entity<City>(entity =>
+            {
+                entity.ToTable("City");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name).HasMaxLength(50);
+            });
 
             modelBuilder.Entity<Client>(entity =>
             {
@@ -96,6 +147,61 @@ namespace BarbershopLogic.DataBase
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Reservation>(entity =>
+            {
+                entity.ToTable("Reservation");
+
+                entity.HasIndex(e => e.Id, "IX_Reservation")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.IdBarber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("idBarber");
+
+                entity.Property(e => e.IdCity).HasColumnName("idCity");
+
+                entity.Property(e => e.IdClient)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("idClient");
+
+                entity.HasOne(d => d.IdBarberNavigation)
+                    .WithMany(p => p.Reservations)
+                    .HasForeignKey(d => d.IdBarber)
+                    .HasConstraintName("FK_Reservation_Barber");
+
+                entity.HasOne(d => d.IdBarberShopNavigation)
+                    .WithMany(p => p.Reservations)
+                    .HasForeignKey(d => d.IdBarberShop)
+                    .HasConstraintName("FK_Reservation_Barbershop");
+
+                entity.HasOne(d => d.IdCityNavigation)
+                    .WithMany(p => p.Reservations)
+                    .HasForeignKey(d => d.IdCity)
+                    .HasConstraintName("FK_Reservation_City");
+
+                entity.HasOne(d => d.IdClientNavigation)
+                    .WithMany(p => p.Reservations)
+                    .HasForeignKey(d => d.IdClient)
+                    .HasConstraintName("FK_Reservation_Client");
+            });
+
+            modelBuilder.Entity<Service>(entity =>
+            {
+                entity.ToTable("Service");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

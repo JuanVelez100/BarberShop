@@ -14,6 +14,7 @@ namespace BarbershopLogic.DataBase
         public string Mobile { get; set; }
         public string Mail { get; set; }
 
+        public virtual Barber Barber { get; set; }
         public virtual Client Client { get; set; }
     }
 }

@@ -4,7 +4,53 @@
     ViewData["Title"] = "Login";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $('#btnTest1').click(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/Barbershop/Prueba",
+                data: { prueba: "Hola Mundo, como estas ?" },
+                dataType: "text",
+                success: function (data) {
+                    alert(data.toString());
+                },
+                error: function () {
+                    alert("Error");
+                }
+            });
+
+        });
+
+        $('#btnTest2').click(function () {
+
+            var LoginEntity = {};
+            LoginEntity.Id = $('#Id').val();
+            LoginEntity.Passwork = $('#Passwork').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Barbershop/Prueba2",
+                data: { LoginEntity: LoginEntity },
+                dataType: "json",
+                success: function (data) {
+                    alert(data.id + "  " + data.passwork);
+                    $('#Id').val("Juan");
+                    $('#Passwork').val("21321");
+                },
+                error: function () {
+                    alert("Error");
+                }
+            });
+
+        });
+
+    });
+
+</script>
 
 
 <div class="row">
@@ -34,7 +80,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Passwork" class="control-label">Contraseña</label>
-                <input asp-for="Passwork" class="form-control textData" />
+                <input asp-for="Passwork" type="password" class="form-control textData" />
                 <span asp-validation-for="Passwork" class="text-danger2"></span>
             </div>
             <div class="form-group" align="center">
@@ -52,6 +98,15 @@
 
     <div class="col-md-4"></div>
 
+</div>
+
+
+<div align="center" style="display:none">
+    <input align="center" type="submit" value="Prueba Ajax 1" class="btn btn-success" id="btnTest1" />
+</div>
+
+<div align="center" style="display:none">
+    <input align="center" type="submit" value="Prueba Ajax 2" class="btn btn-success" id="btnTest2" />
 </div>
 
 
