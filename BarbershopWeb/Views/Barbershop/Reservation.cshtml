@@ -42,13 +42,12 @@
 
                 <img src="/image/Barber.png" class="BarberLogo">
 
-                <form asp-action="Reservation">
+                <form asp-action="ReservationCreate">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="form-group" align="center">
                         <label class="control-label">@ViewBag.Name - @ViewBag.Id</label>
-                        <input asp-for="IdClient" class="form-control textData Hide" value="@ViewBag.Id" disabled />
-                        <span asp-validation-for="IdClient" class="text-danger"></span>
+                        <input asp-for="IdClient" class="form-control Hide" value="@ViewBag.Id"/>
                     </div>
 
                     <div class="form-group">

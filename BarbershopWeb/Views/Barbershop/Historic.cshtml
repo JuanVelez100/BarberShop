@@ -1,0 +1,64 @@
+﻿@model IEnumerable<BarbershopEntity.Entity.HistoryEntity>
+
+@{
+    ViewData["Title"] = "Historic";
+}
+
+<div class="row" align="center">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+        <img src="/image/Barber.png" class="BarberLogo">
+    </div>
+
+    <div class="col-md-3">
+        <a asp-action="Login" class="Salir">
+            <img src="/image/salir.png" class="ImageSalir" />
+        </a>
+    </div>
+
+</div>
+
+<br />
+<br />
+
+<div class="row" align="center">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-md-4" id="@item.Id">
+
+            <div class="panelHeading">
+
+                <h6 class="col-md-4"> <B>Reserva:</B> @item.Id</h6>
+                <h6 class="col-md-8"> <B>Cliente:</B> @item.Client</h6>
+
+            </div>
+
+            <div class="panelBody">
+                <h6 class="col-md-12"> <B>Feha:</B> @item.Date</h6>
+                <h6 class="col-md-12"> <B>Hora:</B> @item.Hour</h6>
+                <h6 class="col-md-12"> <B>Costo:</B> @item.Cost</h6>
+                <h6 class="col-md-12"> <B>Observación:</B> @item.Observation</h6>
+                <h6 class="col-md-12"> <B>Ciudad:</B> @item.City</h6>
+                <h6 class="col-md-12"> <B>Barberia:</B> @item.BarberShop</h6>
+                <h6 class="col-md-12"> <B>Barbero:</B> @item.Barber</h6>
+                <h6 class="col-md-12"> <B>Servicio:</B> @item.Service</h6>
+            </div>
+        </div>
+
+    }
+</div>
+
+<br />
+<br />
+<br />
+
+<div class="col-md-12" align="center">
+    <form asp-action="Home">
+        <button class="btn btn-success">Volver</button>
+    </form>
+</div>
+
+
+

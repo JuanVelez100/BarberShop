@@ -122,6 +122,36 @@ namespace BarbershopWeb.Controllers
             return View();
         }
 
+        public IActionResult ReservationCreate(ReservationEntity reservationEntity)
+        {
+            var responseBase = barberShopLogic.CreateReservation(reservationEntity);
+
+            ViewBag.Message = responseBase.Message;
+            ViewBag.Type = Enum.ToObject(typeof(TypeMessage), (int)responseBase.Type).ToString();
+
+            return View();
+        }
+
+        public IActionResult Historic()
+        {
+            VerifySession();
+
+            var idClient = HttpContext.Session.GetString("token");
+            var listHistory = barberShopLogic.GetAllHistoricForClient(idClient);
+
+            return View(listHistory);
+        }
+
+        public IActionResult Historic2()
+        {
+            VerifySession();
+
+            var idClient = HttpContext.Session.GetString("token");
+            var listHistory = barberShopLogic.GetAllHistoricForClient(idClient);
+
+            return View(listHistory);
+        }
+
         public IActionResult BarberForBarbershop()
         {
             var listBarber = barberShopLogic.GetAllBarbers(1);

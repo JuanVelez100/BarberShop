@@ -1,0 +1,89 @@
+﻿@model IEnumerable<BarbershopEntity.Entity.HistoryEntity>
+
+@{
+    ViewData["Title"] = "Historic2";
+}
+
+<h1>Historic2</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" style="color:white">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BarberShop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Barber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BarberShop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
